@@ -132,7 +132,7 @@ func (a *Apt) Setup() error {
 		}
 	}
 
-	data := []byte(aptFilePath)
+	data := []byte(a.aptFilePath)
 	return yaml.Unmarshal(data, a)
     	
 	//return libbuildpack.NewYAML().Load(a.aptFilePath, a)
