@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"time"
+	"io/ioutil"
 
 	"github.com/cloudfoundry/apt-buildpack/src/apt/apt"
 	"github.com/cloudfoundry/apt-buildpack/src/apt/supply"
@@ -43,6 +44,29 @@ func main() {
 		logger.Error("Unable to setup environment variables: %s", err.Error())
 		os.Exit(13)
 	}
+		
+	aptFileFromStager := filepath.Join(stager.BuildDir(), "apt.yml")
+	logger.Info("Path to apt.yml: %s", aptFileFromStager)
+
+	currentDir, dirErr := filepath.Abs(filepath.Dir(os.Args[0]))
+	if dirErr != nil {
+		logger.Error(dirErr.Error())
+	}
+	logger.Info("Path of executing file: %s", currentDir)
+
+	osex, oserr := os.Executable()
+	if err != nil {
+		logger.Error("OS executable error: %s", oserr)
+	}
+	expath := filepath.Dir(osex)
+	logger.Info("OS Executable path: %s", expath)
+
+	b, apterr := ioutil.ReadFile("src/apt/apt/apt.yml") // just pass the file name
+	if apterr != nil {
+		logger.Error("Error reading apt from src/apt/apt/apt.yml")
+		logger.Error(apterr.Error())
+	}
+	logger.Info("File contents from apt/apt/apt.yml: %s", string(b))
 
 	if exists, err := libbuildpack.FileExists(filepath.Join(stager.BuildDir(), "apt.yml")); err != nil {
 		logger.Error("Unable to test existence of apt.yml: %s", err.Error())
