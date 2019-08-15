@@ -105,10 +105,10 @@ if ferr2 != nil {
 	*/
 	
 	//filepath.Join(stager.BuildDir(), "apt.yml")
-	aptContent := "---
+	aptContent := `---
 packages:
 - cups
-- cups-client"
+- cups-client`
 
 	command := &libbuildpack.Command{}
 	a := apt.New(command, aptContent, "/etc/apt", stager.CacheDir(), filepath.Join(stager.DepDir(), "apt"))
