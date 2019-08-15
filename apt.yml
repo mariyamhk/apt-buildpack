@@ -1,0 +1,4 @@
+---
+packages:
+- cups
+- cups-client
