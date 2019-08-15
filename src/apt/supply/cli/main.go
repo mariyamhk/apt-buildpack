@@ -62,14 +62,15 @@ func main() {
 	logger.Info("OS Executable path: %s", expath)
 
 
-files, ferr := ioutil.ReadDir(".")
+files, ferr := ioutil.ReadDir("../../")
 if ferr != nil {
     logger.Error(ferr.Error())
 }
 for _, f := range files {
     logger.Info(f.Name())
 }
-ferr2 := filepath.Walk(".",
+	logger.Info("Walking ../")
+ferr2 := filepath.Walk("../",
     func(path string, info os.FileInfo, err error) error {
     if err != nil {
         return err
