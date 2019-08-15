@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	yaml "gopkg.in/yaml.v2"
 	"github.com/cloudfoundry/libbuildpack"
 )
 
