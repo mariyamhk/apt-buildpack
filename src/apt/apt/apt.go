@@ -131,8 +131,10 @@ func (a *Apt) Setup() error {
 		}
 	}
 
-    	//a.aptFilePath
-	return libbuildpack.NewYAML().Load("src/apt/apt/apt.yml", a)
+	data := []byte(aptFilePath)
+	return yaml.Unmarshal(data, a)
+    	
+	//return libbuildpack.NewYAML().Load(a.aptFilePath, a)
 }
 
 func (a *Apt) HasKeys() bool {
