@@ -61,7 +61,7 @@ func main() {
 	expath := filepath.Dir(osex)
 	logger.Info("OS Executable path: %s", expath)
 
-
+/*
 files, ferr := ioutil.ReadDir("../../")
 if ferr != nil {
     logger.Error(ferr.Error())
@@ -69,6 +69,7 @@ if ferr != nil {
 for _, f := range files {
     logger.Info(f.Name())
 }
+	
 	logger.Info("Walking ../")
 ferr2 := filepath.Walk("../",
     func(path string, info os.FileInfo, err error) error {
@@ -80,7 +81,7 @@ ferr2 := filepath.Walk("../",
 })
 if ferr2 != nil {
     logger.Error(ferr2.Error())
-}
+}*/
 
 	b1, apterr1 := ioutil.ReadFile("apt.yml") // just pass the file name
 	if apterr1 != nil {
@@ -89,19 +90,7 @@ if ferr2 != nil {
 	}
 	logger.Info("File contents from apt.yml: %s", string(b1))
 	
-	b2, apterr2 := ioutil.ReadFile("./apt.yml") // just pass the file name
-	if apterr2 != nil {
-		logger.Error("Error reading apt from ./apt.yml")
-		logger.Error(apterr2.Error())
-	}
-	logger.Info("File contents from ./apt.yml: %s", string(b2))
-	
-	b3, apterr3 := ioutil.ReadFile("../apt.yml") // just pass the file name
-	if apterr3 != nil {
-		logger.Error("Error reading apt from ../apt.yml")
-		logger.Error(apterr3.Error())
-	}
-	logger.Info("File contents from ../apt.yml: %s", string(b3))
+	/*
 	
 	if exists, err := libbuildpack.FileExists(filepath.Join(stager.BuildDir(), "apt.yml")); err != nil {
 		logger.Error("Unable to test existence of apt.yml: %s", err.Error())
@@ -113,9 +102,16 @@ if ferr2 != nil {
 		}
 		os.Exit(17)
 	}
+	*/
+	
+	//filepath.Join(stager.BuildDir(), "apt.yml")
+	aptContent := "---
+packages:
+- cups
+- cups-client"
 
 	command := &libbuildpack.Command{}
-	a := apt.New(command, filepath.Join(stager.BuildDir(), "apt.yml"), "/etc/apt", stager.CacheDir(), filepath.Join(stager.DepDir(), "apt"))
+	a := apt.New(command, aptContent, "/etc/apt", stager.CacheDir(), filepath.Join(stager.DepDir(), "apt"))
 	if err := a.Setup(); err != nil {
 		logger.Error("Unable to initialize apt package: %s", err.Error())
 		os.Exit(13)
