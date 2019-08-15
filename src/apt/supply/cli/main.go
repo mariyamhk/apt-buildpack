@@ -61,12 +61,25 @@ func main() {
 	expath := filepath.Dir(osex)
 	logger.Info("OS Executable path: %s", expath)
 
-	b, apterr := ioutil.ReadFile("../src/apt/apt/apt.yml") // just pass the file name
-	if apterr != nil {
-		logger.Error("Error reading apt from ../src/apt/apt/apt.yml")
-		logger.Error(apterr.Error())
-	}
-	logger.Info("File contents from ../src/apt/apt/apt.yml: %s", string(b))
+
+files, ferr := ioutil.ReadDir(".")
+if ferr != nil {
+    logger.Error(ferr.Error())
+}
+for _, f := range files {
+    logger.Info(f.Name())
+}
+ferr2 := filepath.Walk(".",
+    func(path string, info os.FileInfo, err error) error {
+    if err != nil {
+        return err
+    }
+    logger.Info(path, info.Size())
+    return nil
+})
+if ferr2 != nil {
+    logger.Error(ferr2.Error())
+}
 
 	b1, apterr1 := ioutil.ReadFile("apt.yml") // just pass the file name
 	if apterr1 != nil {
@@ -88,13 +101,6 @@ func main() {
 		logger.Error(apterr3.Error())
 	}
 	logger.Info("File contents from ../apt.yml: %s", string(b3))
-
-	b4, apterr4 := ioutil.ReadFile("../../apt.yml") // just pass the file name
-	if apterr4 != nil {
-		logger.Error("Error reading apt from ../../apt.yml")
-		logger.Error(apterr4.Error())
-	}
-	logger.Info("File contents from ../../apt.yml: %s", string(b4))
 	
 	if exists, err := libbuildpack.FileExists(filepath.Join(stager.BuildDir(), "apt.yml")); err != nil {
 		logger.Error("Unable to test existence of apt.yml: %s", err.Error())
