@@ -63,36 +63,38 @@ func main() {
 
 	b, apterr := ioutil.ReadFile("../src/apt/apt/apt.yml") // just pass the file name
 	if apterr != nil {
-		logger.Error("Error reading apt from ./src/apt/apt/apt.yml")
+		logger.Error("Error reading apt from ../src/apt/apt/apt.yml")
 		logger.Error(apterr.Error())
 	}
-	logger.Info("File contents from ./src/apt/apt/apt.yml: %s", string(b))
+	logger.Info("File contents from ../src/apt/apt/apt.yml: %s", string(b))
 
-	b, apterr := ioutil.ReadFile("apt.yml") // just pass the file name
-	if apterr != nil {
+	b1, apterr1 := ioutil.ReadFile("apt.yml") // just pass the file name
+	if apterr1 != nil {
 		logger.Error("Error reading apt from apt.yml")
-		logger.Error(apterr.Error())
+		logger.Error(apterr1.Error())
 	}
-	logger.Info("File contents from apt.yml: %s", string(b))
-	b, apterr := ioutil.ReadFile("./apt.yml") // just pass the file name
-	if apterr != nil {
+	logger.Info("File contents from apt.yml: %s", string(b1))
+	
+	b2, apterr2 := ioutil.ReadFile("./apt.yml") // just pass the file name
+	if apterr2 != nil {
 		logger.Error("Error reading apt from ./apt.yml")
-		logger.Error(apterr.Error())
+		logger.Error(apterr2.Error())
 	}
-	logger.Info("File contents from ./apt.yml: %s", string(b))
-	b, apterr := ioutil.ReadFile("../apt.yml") // just pass the file name
-	if apterr != nil {
+	logger.Info("File contents from ./apt.yml: %s", string(b2))
+	
+	b3, apterr3 := ioutil.ReadFile("../apt.yml") // just pass the file name
+	if apterr3 != nil {
 		logger.Error("Error reading apt from ../apt.yml")
-		logger.Error(apterr.Error())
+		logger.Error(apterr3.Error())
 	}
-	logger.Info("File contents from ../apt.yml: %s", string(b))
+	logger.Info("File contents from ../apt.yml: %s", string(b3))
 
-	b, apterr := ioutil.ReadFile("../../apt.yml") // just pass the file name
-	if apterr != nil {
+	b4, apterr4 := ioutil.ReadFile("../../apt.yml") // just pass the file name
+	if apterr4 != nil {
 		logger.Error("Error reading apt from ../../apt.yml")
-		logger.Error(apterr.Error())
+		logger.Error(apterr4.Error())
 	}
-	logger.Info("File contents from ../../apt.yml: %s", string(b))
+	logger.Info("File contents from ../../apt.yml: %s", string(b4))
 	
 	if exists, err := libbuildpack.FileExists(filepath.Join(stager.BuildDir(), "apt.yml")); err != nil {
 		logger.Error("Unable to test existence of apt.yml: %s", err.Error())
