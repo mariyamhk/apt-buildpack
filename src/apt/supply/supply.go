@@ -61,7 +61,7 @@ func (s *Supplier) Run() error {
 	}
 
 	s.Log.BeginStep("Updating apt cache")
-	if err := s.Apt.Update(); err != nil {
+	if err := s.Apt.Update(s.Log); err != nil {
 		return err
 	}
 
