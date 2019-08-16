@@ -89,9 +89,11 @@ func (s *Supplier) createSymlinks() error {
 		{"usr/include", "include"},
 	} {
 		dest := filepath.Join(s.Stager.DepDir(), "apt", dirs[0])
+		s.Log.Info("SymLink filepath: %s", dest)
 		if exists, err := libbuildpack.FileExists(dest); err != nil {
 			return err
 		} else if exists {
+		    s.Log.Info("SymLink LinkInDepDir: %s", dirs[1])
 			if err := s.Stager.LinkDirectoryInDepDir(dest, dirs[1]); err != nil {
 				return err
 			}
@@ -106,6 +108,7 @@ func (s *Supplier) createSymlinks() error {
 		{"usr/lib/pkgconfig", "pkgconfig"},
 	} {
 		dest := filepath.Join(s.Stager.DepDir(), "apt", dirs[0])
+        s.Log.Info("Copy pkgconfig, dest: %s", dest)
 		if exists, err := libbuildpack.FileExists(dest); err != nil {
 			return err
 		} else if exists {
@@ -114,11 +117,13 @@ func (s *Supplier) createSymlinks() error {
 				return err
 			}
 			destDir := filepath.Join(s.Stager.DepDir(), dirs[1])
+			s.Log("To destDir: %s", destDir)
 			if err := os.MkdirAll(destDir, 0755); err != nil {
 				return err
 			}
 			for _, file := range files {
 				//TODO: better way to copy a file?
+				s.Log("Writing file: %s", filepath.Join(dest, file.Name()))
 				contents, err := ioutil.ReadFile(filepath.Join(dest, file.Name()))
 				if err != nil {
 					return err
