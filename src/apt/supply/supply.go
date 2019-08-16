@@ -21,7 +21,7 @@ type Apt interface {
 	HasRepos() bool
 	AddKeys() error
 	AddRepos() error
-	Update() error
+	Update(*libbuildpack.Logger) error
 	DownloadAll(*libbuildpack.Logger) error
 	InstallAll(*libbuildpack.Logger) error
 }
