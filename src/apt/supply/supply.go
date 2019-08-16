@@ -66,16 +66,16 @@ func (s *Supplier) Run() error {
 	}
 
 	s.Log.BeginStep("Downloading apt packages")
-	if err := s.Apt.DownloadAll(); err != nil {
+	if err := s.Apt.DownloadAll(s.Log); err != nil {
 		return err
 	}
 
 	s.Log.BeginStep("Installing apt packages")
-	if err := s.Apt.InstallAll(); err != nil {
+	if err := s.Apt.InstallAll(s.Log); err != nil {
 		return err
 	}
 
-	s.Log.Debug("Creating Symlinks")
+	s.Log.BeginStep("Creating Symlinks")
 	return s.createSymlinks()
 }
 
