@@ -241,7 +241,7 @@ func (a *Apt) InstallAll(logger *libbuildpack.Logger) error {
 
 	for _, file := range files {
 	    logger.Info("Installing File: %s", filepath.Base(file))
-		err := a.install(filepath.Base(file))
+		err := a.install(filepath.Base(file), logger)
 		if err != nil {
 			return err
 		}
@@ -249,11 +249,13 @@ func (a *Apt) InstallAll(logger *libbuildpack.Logger) error {
 	return nil
 }
 
-func (a *Apt) install(pkg string) error {
+func (a *Apt) install(pkg string, logger *libbuildpack.Logger) error {
+    logger.Info("Install args - dpkg -x %s %s", filepath.Join(a.archiveDir, pkg), a.installDir)
 	output, err := a.command.Output("/", "dpkg", "-x", filepath.Join(a.archiveDir, pkg), a.installDir)
 	if err != nil {
 		return fmt.Errorf("failed to install pkg %s\n\n%s\n\n%s", pkg, output, err.Error())
 	}
+    logger.Info("Install output: %s", string(output))
 	return nil
 }
 
