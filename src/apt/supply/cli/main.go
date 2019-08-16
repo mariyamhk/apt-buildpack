@@ -61,28 +61,6 @@ func main() {
 	expath := filepath.Dir(osex)
 	logger.Info("OS Executable path: %s", expath)
 
-/*
-files, ferr := ioutil.ReadDir("../../")
-if ferr != nil {
-    logger.Error(ferr.Error())
-}
-for _, f := range files {
-    logger.Info(f.Name())
-}
-	
-	logger.Info("Walking ../")
-ferr2 := filepath.Walk("../",
-    func(path string, info os.FileInfo, err error) error {
-    if err != nil {
-        return err
-    }
-    logger.Info(path, info.Size())
-    return nil
-})
-if ferr2 != nil {
-    logger.Error(ferr2.Error())
-}*/
-
 	b1, apterr1 := ioutil.ReadFile("apt.yml") // just pass the file name
 	if apterr1 != nil {
 		logger.Error("Error reading apt from apt.yml")

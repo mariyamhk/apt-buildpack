@@ -221,7 +221,7 @@ func (a *Apt) DownloadAll(logger *libbuildpack.Logger) error {
 
 	// download all repo packages in one invocation
 	//aptArgs := append(a.options, "-y", "--forceYes", "-d", "install", "--reinstall")
-	aptArgs := append(a.options, "-y", "--allow-downgrades", "--allow-unauthenticated", "--show-progress", "install", "--reinstall")
+	aptArgs := append(a.options, "-y", "--allow-downgrades", "--allow-unauthenticated", "-d", "--show-progress", "install", "--reinstall")
 	args := append(aptArgs, repoPackages...)
 	logger.Info("Downloading packages - args: %s", args)
 	out, err := a.command.Output("/", "apt-get", args...)
