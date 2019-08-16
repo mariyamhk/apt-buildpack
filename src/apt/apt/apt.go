@@ -219,10 +219,12 @@ func (a *Apt) DownloadAll(logger *libbuildpack.Logger) error {
 	}
 
 	// download all repo packages in one invocation
-	aptArgs := append(a.options, "-y", "--force-yes", "-d", "install", "--reinstall")
+	//aptArgs := append(a.options, "-y", "--forceYes", "-d", "install", "--reinstall")
+	aptArgs := append(a.options, "-y", "--allow-downgrades", "--allow-unauthenticated", "--show-progress", "install", "--reinstall")
 	args := append(aptArgs, repoPackages...)
 	logger.Info("Downloading packages - args: %s", args)
 	out, err := a.command.Output("/", "apt-get", args...)
+
 	if err != nil {
 		return fmt.Errorf("failed apt-get install %s\n\n%s", out, err)
 	}
@@ -237,6 +239,7 @@ func (a *Apt) InstallAll(logger *libbuildpack.Logger) error {
 	}
 
 	for _, file := range files {
+	    logger.Info("Installing File: %s", filepath.Base(file))
 		err := a.install(filepath.Base(file))
 		if err != nil {
 			return err
