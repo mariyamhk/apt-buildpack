@@ -23,8 +23,8 @@ func (c *Command) Output(dir string, program string, args ...string) (string, er
 	cmd.Stderr = os.Stderr // TODO remove this line
 	cmd.Dir = dir
 
-	//output, err := cmd.Output()
-	output, err := cmd.CombinedOutput()
+	output, err := cmd.Output()
+	//output, err := cmd.CombinedOutput()
 	return string(output), err
 }
 

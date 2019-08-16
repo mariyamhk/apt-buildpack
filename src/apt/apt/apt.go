@@ -192,8 +192,9 @@ func (a *Apt) AddRepos() error {
 	return nil
 }
 
-func (a *Apt) Update() error {
+func (a *Apt) Update(logger *libbuildpack.Logger) error {
 	args := append(a.options, "update")
+	logger.Info("Running update with args: %s", args)
 	if out, err := a.command.Output("/", "apt-get", args...); err != nil {
 		return fmt.Errorf("failed to apt-get update %s\n\n%s", out, err)
 	}
