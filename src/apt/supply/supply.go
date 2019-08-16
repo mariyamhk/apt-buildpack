@@ -22,8 +22,8 @@ type Apt interface {
 	AddKeys() error
 	AddRepos() error
 	Update() error
-	DownloadAll() error
-	InstallAll() error
+	DownloadAll(*libbuildpack.Logger) error
+	InstallAll(*libbuildpack.Logger) error
 }
 
 type Supplier struct {
